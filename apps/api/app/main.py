@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .config import settings
 from .db import get_db
 from .indexes import ensure_indexes
-from .routes import admin, auth
+from .routes import admin, auth, children, lessons, skills
 from .seeds.settings import seed_settings
 
 
@@ -29,6 +29,9 @@ app.add_middleware(
 
 app.include_router(auth.router)
 app.include_router(admin.router)
+app.include_router(children.router)
+app.include_router(skills.router)
+app.include_router(lessons.router)
 
 
 @app.get("/health")
