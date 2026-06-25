@@ -1,4 +1,11 @@
-import type { AuthTokens, RegisterRequest, RolesSettings, UserPublic } from '@koda/contracts';
+import type {
+    AuthTokens,
+    FeaturesSettings,
+    RegisterRequest,
+    RolesSettings,
+    UserPublic,
+    XpSettings,
+} from '@koda/contracts';
 import type { ChildTotal, LessonResult, LessonSkill, SubmittedAnswer } from '@/features/lessons/types';
 
 interface SkillSummary {
@@ -94,6 +101,42 @@ export async function getMe(token: string) {
 export async function getRoleSettings(token: string) {
     return request<RolesSettings>('/admin/settings/roles', {
         headers: { Authorization: `Bearer ${token}` },
+    });
+}
+
+export async function updateRoleSettings(token: string, payload: RolesSettings) {
+    return request<RolesSettings>('/admin/settings/roles', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify(payload),
+    });
+}
+
+export async function getFeatureSettings(token: string) {
+    return request<FeaturesSettings>('/admin/settings/features', {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+}
+
+export async function updateFeatureSettings(token: string, payload: FeaturesSettings) {
+    return request<FeaturesSettings>('/admin/settings/features', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify(payload),
+    });
+}
+
+export async function getXpSettings(token: string) {
+    return request<XpSettings>('/admin/settings/xp', {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+}
+
+export async function updateXpSettings(token: string, payload: XpSettings) {
+    return request<XpSettings>('/admin/settings/xp', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify(payload),
     });
 }
 

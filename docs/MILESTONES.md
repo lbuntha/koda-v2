@@ -12,8 +12,8 @@ Goal: a logged-in student can complete a seeded math skill end-to-end. XP lands 
 | 4 | done | Web shell + auth UI + i18n |
 | 5 | done | Skill template engine + 2 templates (mcq, math-worksheet) |
 | 6 | done | Lesson engine + ledger persistence |
-| 7 | in progress | Seed loader + 2 seeded skills (counting-to-10, addition-within-10) |
-| 8 | done | Admin settings page + superadmin guard |
+| 7 | pending | Seed loader + 2 seeded skills (counting-to-10, addition-within-10) |
+| 8 | done | Admin UI: sidebar, roles matrix, feature flags, XP settings (superadmin guard) |
 | 9 | pending | Tests + 12 acceptance items pass |
 
 ## Milestone 2 — Admin & Analytics (2 weeks)

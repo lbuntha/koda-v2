@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Koda theme tokens — light + dark, ported from kodaapp DESIGN_STANDARDS */
+:root {
+    --koda-bg: #f5f3ff;
+    --koda-surface: #ffffff;
+    --koda-fg: #1e1b4b;
+    --koda-muted: #64748b;
+    --koda-border: #DDD8F3;
+    --koda-primary: #534AB7;
+    --koda-primary-hover: #453DA0;
+    --koda-accent: #7C6DD8;
+    --koda-amber: #EF9F27;
+    color-scheme: light;
+}
+
+.dark {
+    --koda-bg: #0B1120;
+    --koda-surface: #0f172a;
+    --koda-fg: #f8fafc;
+    --koda-muted: #94a3b8;
+    --koda-border: #1E293B;
+    --koda-primary: #8B85D0;
+    --koda-primary-hover: #AFA9EC;
+    --koda-accent: #818CF8;
+    --koda-amber: #F5B94E;
+    color-scheme: dark;
+}
+
 html,
 body,
 #root {
@@ -12,6 +39,9 @@ body {
     margin: 0;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
+    background-color: var(--koda-bg);
+    color: var(--koda-fg);
+    transition: background-color 300ms ease, color 300ms ease;
 }
 
 button,

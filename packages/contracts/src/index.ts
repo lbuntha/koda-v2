@@ -163,3 +163,20 @@ export interface AppSetting {
     updated_by_user_id?: string | null;
     updated_at: string;
 }
+
+export interface FeatureFlag {
+    key: string;
+    label: string;
+    description: string;
+    enabled: boolean;
+}
+
+export interface FeaturesSettings {
+    items: FeatureFlag[];
+}
+
+export interface XpSettings {
+    lesson_complete: number;
+    perfect_lesson_bonus: number;
+    daily_goal: number;
+}

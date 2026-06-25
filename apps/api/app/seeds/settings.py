@@ -31,6 +31,43 @@ DEFAULT_SETTINGS: list[dict[str, Any]] = [
         },
     },
     {
+        "key": "features",
+        "value": {
+            "items": [
+                {
+                    "key": "lessons.enabled",
+                    "label": "Lessons",
+                    "description": "Allow children to play published lessons.",
+                    "enabled": True,
+                },
+                {
+                    "key": "streaks.enabled",
+                    "label": "Streaks",
+                    "description": "Show streak progress and daily-goal badges.",
+                    "enabled": True,
+                },
+                {
+                    "key": "ocr.enabled",
+                    "label": "OCR worksheet upload",
+                    "description": "Allow teachers to upload a worksheet image and generate questions.",
+                    "enabled": False,
+                },
+                {
+                    "key": "llm.enabled",
+                    "label": "LLM-assisted authoring",
+                    "description": "Use an LLM to draft questions and explanations.",
+                    "enabled": False,
+                },
+                {
+                    "key": "multiplayer.enabled",
+                    "label": "Multiplayer",
+                    "description": "Enable Study Together live multiplayer sessions.",
+                    "enabled": False,
+                },
+            ]
+        },
+    },
+    {
         "key": "roles",
         "value": {
             "permissions": [
