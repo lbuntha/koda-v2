@@ -43,14 +43,10 @@ async def promote_user(email: str, role: Role, password: str | None, display_nam
     return f"Created {role.value} {normalized_email}."
 
 
-async def promote_superadmin(email: str, password: str | None, display_name: str | None) -> str:
-    return await promote_user(email, Role.SUPERADMIN, password, display_name)
-
-
 async def main() -> None:
     parser = argparse.ArgumentParser(description="Create or promote a Koda admin account.")
     parser.add_argument("--email", required=True)
-    parser.add_argument("--role", choices=[Role.ADMIN.value, Role.SUPERADMIN.value], default=Role.SUPERADMIN.value)
+    parser.add_argument("--role", choices=[Role.ADMIN.value], default=Role.ADMIN.value)
     parser.add_argument("--password", default=None)
     parser.add_argument("--display-name", default=None)
     args = parser.parse_args()

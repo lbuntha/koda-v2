@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes, forwardRef, ReactNode } from 'react';
+import { LoaderCircle } from 'lucide-react';
 
 type Variant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'amber';
 type Size = 'sm' | 'md' | 'lg' | 'icon';
@@ -13,9 +14,9 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const BASE =
-    'inline-flex items-center justify-center gap-2 rounded-2xl font-bold transition-all duration-200 ' +
+    'inline-flex items-center justify-center gap-2 rounded-2xl font-semibold transition-all duration-200 ' +
     'active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100 ' +
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 ' +
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BDB4F4] focus-visible:ring-offset-2 ' +
     'focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900';
 
 const SIZES: Record<Size, string> = {
@@ -27,16 +28,16 @@ const SIZES: Record<Size, string> = {
 
 const VARIANTS: Record<Variant, string> = {
     primary:
-        'bg-brand-500 text-white shadow-koda-glow hover:bg-brand-600 ' +
+        'bg-[#534AB7] text-white shadow-sm hover:bg-[#453DA0] ' +
         'dark:bg-brand-400 dark:text-slate-950 dark:hover:bg-brand-200',
     secondary:
-        'bg-koda-purple-soft text-brand-700 hover:bg-brand-100 ' +
+        'bg-[#F2EEFF] text-[#534AB7] hover:bg-[#E8E2FF] ' +
         'dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700',
     outline:
-        'border border-slate-200 bg-white text-slate-700 hover:border-brand-500 hover:text-brand-700 ' +
+        'border border-[#DCD7EA] bg-white text-[#534AB7] shadow-sm hover:border-[#BDB4F4] hover:bg-[#FBFAFF] hover:text-[#453DA0] ' +
         'dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-brand-400 dark:hover:text-brand-200',
     ghost:
-        'text-slate-600 hover:bg-slate-100 hover:text-slate-900 ' +
+        'text-[#6D6997] hover:bg-[#F4F1FF] hover:text-[#0E0B55] ' +
         'dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white',
     destructive:
         'bg-rose-500 text-white hover:bg-rose-600 shadow-sm ' +
@@ -79,14 +80,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 });
 
 function Spinner() {
-    return (
-        <svg className="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-            <path
-                className="opacity-75"
-                d="M4 12a8 8 0 0 1 8-8v4a4 4 0 0 0-4 4H4z"
-                fill="currentColor"
-            />
-        </svg>
-    );
+    return <LoaderCircle aria-hidden="true" className="h-4 w-4 animate-spin" strokeWidth={2.4} />;
 }

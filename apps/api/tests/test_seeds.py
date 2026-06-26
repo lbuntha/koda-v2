@@ -1,4 +1,5 @@
-from app.seeds.admin import promote_superadmin
+from app.models import Role
+from app.seeds.admin import promote_user
 from app.seeds.settings import DEFAULT_SETTINGS, seed_settings
 
 
@@ -52,23 +53,34 @@ def test_default_settings_include_roles_and_rights() -> None:
     roles_setting = next(setting for setting in DEFAULT_SETTINGS if setting["key"] == "roles")
 
     assert {role["role"] for role in roles_setting["value"]["roles"]} == {
+        "student",
         "parent",
         "teacher",
         "admin",
-        "superadmin",
     }
     assert "admin.settings.write" in next(
-        role for role in roles_setting["value"]["roles"] if role["role"] == "superadmin"
+        role for role in roles_setting["value"]["roles"] if role["role"] == "admin"
     )["permissions"]
+
+
+def test_default_settings_seed_menu_items_per_role() -> None:
+    roles_setting = next(setting for setting in DEFAULT_SETTINGS if setting["key"] == "roles")
+    menus_setting = next(setting for setting in DEFAULT_SETTINGS if setting["key"] == "menus")
+    catalog_ids = {item["id"] for item in menus_setting["value"]["items"]}
+
+    for role in roles_setting["value"]["roles"]:
+        assert "menu_items" in role, f"role {role['role']} missing menu_items"
+        for mid in role["menu_items"]:
+            assert mid in catalog_ids, f"role {role['role']} references unknown menu {mid}"
 
 
 async def test_admin_seed_promotes_existing_user(monkeypatch) -> None:
     db = FakeDb({"_id": "user_1", "email": "owner@example.com"})
     monkeypatch.setattr("app.seeds.admin.get_db", lambda: db)
 
-    message = await promote_superadmin("Owner@Example.com", None, None)
+    message = await promote_user("Owner@Example.com", Role.ADMIN, None, None)
 
-    assert message == "Promoted owner@example.com to superadmin."
+    assert message == "Promoted owner@example.com to admin."
     assert db.users.updates[0][0] == {"_id": "user_1"}
     assert db.users.inserts == []
 
@@ -77,8 +89,8 @@ async def test_admin_seed_creates_missing_user(monkeypatch) -> None:
     db = FakeDb()
     monkeypatch.setattr("app.seeds.admin.get_db", lambda: db)
 
-    message = await promote_superadmin("owner@example.com", "strong-password", "Owner")
+    message = await promote_user("owner@example.com", Role.ADMIN, "strong-password", "Owner")
 
-    assert message == "Created superadmin owner@example.com."
-    assert db.users.inserts[0]["role"] == "superadmin"
+    assert message == "Created admin owner@example.com."
+    assert db.users.inserts[0]["role"] == "admin"
     assert db.users.inserts[0]["display_name"] == "Owner"

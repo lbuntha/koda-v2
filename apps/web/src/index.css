@@ -48,3 +48,90 @@ button,
 input {
     font: inherit;
 }
+
+.koda-admin-page-title {
+    color: #0E0B55;
+    font-size: clamp(1.75rem, 2vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.dark .koda-admin-page-title {
+    color: #ffffff;
+}
+
+.koda-admin-section-title {
+    color: #0E0B55;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.dark .koda-admin-section-title {
+    color: #ffffff;
+}
+
+.koda-admin-card-title {
+    color: #0E0B55;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.dark .koda-admin-card-title {
+    color: #ffffff;
+}
+
+.koda-admin-nav-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.koda-admin-label {
+    color: #6D6997;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.dark .koda-admin-label {
+    color: #cbd5e1;
+}
+
+.koda-admin-metric {
+    color: #0E0B55;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.dark .koda-admin-metric {
+    color: #ffffff;
+}
+
+.koda-admin-chip {
+    color: #534AB7;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.koda-admin-skeleton {
+    background: linear-gradient(90deg, #F2EEFF 25%, #FFFFFF 37%, #F2EEFF 63%);
+    background-size: 400% 100%;
+    animation: koda-admin-shimmer 1.2s ease-in-out infinite;
+}
+
+.dark .koda-admin-skeleton {
+    background: linear-gradient(90deg, #1e293b 25%, #334155 37%, #1e293b 63%);
+    background-size: 400% 100%;
+}
+
+@keyframes koda-admin-shimmer {
+    0% {
+        background-position: 100% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}

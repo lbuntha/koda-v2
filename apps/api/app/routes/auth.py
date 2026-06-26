@@ -10,6 +10,7 @@ from ..auth import (
     AuthTokens,
     get_current_user,
     hash_password,
+    issue_tokens_from_refresh,
     issue_tokens,
     new_id,
     normalize_email,
@@ -24,9 +25,13 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 class RegisterRequest(BaseModel):
     email: EmailStr
-    password: str = Field(min_length=8, max_length=128)
+    password: str = Field(min_length=6, max_length=128)
     display_name: str = Field(min_length=1, max_length=80)
     locale: str = Field(default="en", min_length=2, max_length=12)
+
+
+class RefreshRequest(BaseModel):
+    refresh_token: str = Field(min_length=16)
 
 
 @router.post("/register", response_model=AuthTokens, status_code=status.HTTP_201_CREATED)
@@ -69,11 +74,8 @@ async def login(form: Annotated[OAuth2PasswordRequestForm, Depends()]) -> AuthTo
 
 
 @router.post("/refresh", response_model=AuthTokens)
-async def refresh() -> AuthTokens:
-    raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Refresh token rotation lands with session hardening",
-    )
+async def refresh(payload: RefreshRequest) -> AuthTokens:
+    return await issue_tokens_from_refresh(payload.refresh_token)
 
 
 @router.get("/me")

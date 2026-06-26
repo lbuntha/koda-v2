@@ -1,0 +1,32 @@
+<svg width="680" height="240" viewBox="0 0 680 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Koda">
+  <defs>
+    <linearGradient id="bg" x1="66" y1="48" x2="184" y2="198" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#9E67FF"/>
+      <stop offset="52%" stop-color="#774FEB"/>
+      <stop offset="100%" stop-color="#4D3ED3"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="68" y1="48" x2="160" y2="130" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.2"/>
+      <stop offset="70%" stop-color="#FFFFFF" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="sh" x="-35%" y="-35%" width="170%" height="170%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#6D4DE8" flood-opacity="0.18"/>
+    </filter>
+    <clipPath id="clip">
+      <rect x="46" y="44" width="144" height="152" rx="38"/>
+    </clipPath>
+  </defs>
+
+  <rect x="46" y="44" width="144" height="152" rx="38" fill="url(#bg)" filter="url(#sh)"/>
+  <ellipse cx="100" cy="65" rx="52" ry="24" fill="url(#shine)" clip-path="url(#clip)"/>
+  <ellipse cx="145" cy="173" rx="48" ry="18" fill="#392DAE" opacity="0.42" clip-path="url(#clip)"/>
+
+  <g fill="#FFFFFF">
+    <rect x="83" y="80" width="19" height="91" rx="9.5"/>
+    <path d="M101 119L169 80L180 97L114 126H101Z"/>
+    <path d="M101 125H114L180 154L169 171L101 132Z"/>
+  </g>
+
+  <text x="236" y="129" dominant-baseline="middle" font-family="Fredoka, Nunito, Arial Rounded MT Bold, system-ui, sans-serif" font-size="92" font-weight="600" fill="#5B4FD8">Koda</text>
+</svg>

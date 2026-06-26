@@ -2,18 +2,20 @@ import { useEffect, useMemo, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import type { FeaturesSettings } from '@koda/contracts';
 import type { AdminOutletContext } from '../AdminLayout';
-import { isSuperadmin } from '../hooks/useAdminAuth';
+import { AdminPageLayout } from '../components/AdminPageLayout';
+import { isAdminRole } from '../hooks/useAdminAuth';
 import { getFeatureSettings, updateFeatureSettings } from '@/lib/api';
 import { copy } from '@/lib/i18n';
 import { Card } from '@/shared/ui';
 import { ErrorBanner, ReadOnlyPill, SaveBar } from './RolesPage';
+import { AdminPageSkeleton } from '../components/AdminSkeleton';
 
 type SaveState = 'idle' | 'saving' | 'saved' | 'error';
 
 export default function FeaturesPage() {
     const { locale, token, user } = useOutletContext<AdminOutletContext>();
     const t = copy[locale];
-    const canEdit = isSuperadmin(user.role);
+    const canEdit = isAdminRole(user.role);
 
     const [initial, setInitial] = useState<FeaturesSettings | null>(null);
     const [draft, setDraft] = useState<FeaturesSettings | null>(null);
@@ -56,31 +58,25 @@ export default function FeaturesPage() {
     }
 
     return (
-        <section className="max-w-3xl">
-            <header className="flex flex-wrap items-start justify-between gap-4">
-                <div>
-                    <p className="text-xs font-black uppercase tracking-wide text-brand-600 dark:text-brand-400">
-                        {t.adminConsole}
-                    </p>
-                    <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-900 dark:text-white">
-                        {t.featuresTitle}
-                    </h1>
-                    <p className="mt-3 text-base leading-7 text-slate-600 dark:text-slate-300">{t.featuresBody}</p>
-                </div>
-                {!canEdit && <ReadOnlyPill label={t.readOnly} />}
-            </header>
+        <AdminPageLayout
+            actions={!canEdit && <ReadOnlyPill label={t.readOnly} />}
+            className="max-w-3xl"
+            description={t.featuresBody}
+            title={t.featuresTitle}
+        >
 
             {error && <ErrorBanner message={error} />}
+            {!draft && !error && <AdminPageSkeleton rows={4} />}
 
             {draft && (
-                <div className="mt-6 space-y-3">
+                <div className="space-y-3">
                     {draft.items.map(item => (
-                        <Card key={item.key}>
+                        <Card key={item.key} className="border-[#E7E2F6]">
                             <div className="flex items-start justify-between gap-4">
                                 <div className="min-w-0">
-                                    <p className="text-base font-bold text-slate-900 dark:text-white">{item.label}</p>
-                                    <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">{item.description}</p>
-                                    <p className="mt-1 font-mono text-[11px] text-slate-400 dark:text-slate-500">
+                                    <p className="koda-admin-card-title">{item.label}</p>
+                                    <p className="koda-admin-label mt-1">{item.description}</p>
+                                    <p className="mt-1 font-mono text-[11px] text-[#8D89AE] dark:text-slate-500">
                                         {item.key}
                                     </p>
                                 </div>
@@ -108,7 +104,7 @@ export default function FeaturesPage() {
                     onSave={save}
                 />
             )}
-        </section>
+        </AdminPageLayout>
     );
 }
 
@@ -129,7 +125,7 @@ function Toggle({
             aria-pressed={enabled}
             className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full transition disabled:cursor-not-allowed disabled:opacity-50 ${
                 enabled
-                    ? 'bg-brand-500 dark:bg-brand-400'
+                    ? 'bg-[#534AB7] dark:bg-brand-400'
                     : 'bg-slate-300 dark:bg-slate-700'
             }`}
             disabled={disabled}

@@ -10,6 +10,8 @@ class Settings(BaseSettings):
     jwt_access_ttl_minutes: int = 15
     jwt_refresh_ttl_days: int = 30
     cors_origin_regex: str = r"^http://(localhost|127\.0\.0\.1|0\.0\.0\.0)(:\d+)?$"
+    upload_dir: str = "uploads"
+    public_base_url: str = "http://localhost:8000"
 
 
 settings = Settings()

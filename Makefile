@@ -1,4 +1,4 @@
-.PHONY: dev dev-local local-api local-web local-mongo down logs build api web mongo seed admin-seed settings-seed test typecheck clean
+.PHONY: dev dev-local local-api local-web local-mongo down logs build api web mongo seed admin-seed settings-seed settings-reseed test typecheck clean
 
 COMPOSE := docker compose --env-file .env -f infra/docker-compose.yml
 
@@ -45,10 +45,13 @@ seed:
 
 admin-seed:
 	@if [ -z "$(EMAIL)" ]; then echo "Usage: make admin-seed EMAIL=you@example.com"; exit 1; fi
-	PYTHONPATH=apps/api .venv/bin/python -m app.seeds.admin --email $(EMAIL) --role $(or $(ROLE),superadmin) $(if $(PASSWORD),--password $(PASSWORD),)
+	PYTHONPATH=apps/api .venv/bin/python -m app.seeds.admin --email $(EMAIL) --role $(or $(ROLE),admin) $(if $(PASSWORD),--password $(PASSWORD),)
 
 settings-seed:
 	PYTHONPATH=apps/api .venv/bin/python -m app.seeds.settings
+
+settings-reseed:
+	PYTHONPATH=apps/api .venv/bin/python -m app.seeds.settings --force
 
 test:
 	cd apps/web && npm test -- --run

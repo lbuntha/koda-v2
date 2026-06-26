@@ -14,7 +14,6 @@ class Role(StrEnum):
     PARENT = "parent"
     TEACHER = "teacher"
     ADMIN = "admin"
-    SUPERADMIN = "superadmin"
 
 
 class SkillStatus(StrEnum):
@@ -40,6 +39,11 @@ class User(PyObjectModel):
     display_name: str
     role: Role
     locale: str = "en"
+    avatar_url: str | None = None
+    phone: str | None = None
+    timezone: str = "Asia/Phnom_Penh"
+    avatar_svg: str | None = None
+    notification_preferences: dict[str, bool] = Field(default_factory=dict)
     created_at: datetime = Field(default_factory=utc_now)
     updated_at: datetime = Field(default_factory=utc_now)
     disabled_at: datetime | None = None
@@ -49,9 +53,17 @@ class ChildProfile(PyObjectModel):
     id: str = Field(alias="_id")
     parent_user_id: str
     display_name: str
+    avatar_url: str | None = None
+    avatar_svg: str | None = None
     grade: str | None = None
+    age_range_id: str | None = None
+    subject_ids: list[str] = Field(default_factory=list)
+    primary_subject_id: str | None = None
+    placement_status: Literal["not_started", "in_progress", "complete"] = "not_started"
+    placement_result_summary: dict[str, Any] | None = None
     locale: str = "en"
     active_skill_ids: list[str] = Field(default_factory=list)
+    disabled_at: datetime | None = None
     created_at: datetime = Field(default_factory=utc_now)
     updated_at: datetime = Field(default_factory=utc_now)
 

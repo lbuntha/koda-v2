@@ -15,6 +15,10 @@ async def ensure_indexes(db: Any) -> None:
         [
             IndexModel([("parent_user_id", ASCENDING)], name="idx_child_profiles_parent"),
             IndexModel(
+                [("parent_user_id", ASCENDING), ("placement_status", ASCENDING)],
+                name="idx_child_profiles_parent_placement_status",
+            ),
+            IndexModel(
                 [("parent_user_id", ASCENDING), ("display_name", ASCENDING)],
                 name="idx_child_profiles_parent_name",
             ),
@@ -39,6 +43,18 @@ async def ensure_indexes(db: Any) -> None:
             IndexModel(
                 [("child_profile_id", ASCENDING), ("skill_id", ASCENDING), ("status", ASCENDING)],
                 name="idx_attempts_child_skill_status",
+            ),
+        ]
+    )
+    await db.placement_sessions.create_indexes(
+        [
+            IndexModel(
+                [("parent_user_id", ASCENDING), ("child_profile_id", ASCENDING), ("started_at", DESCENDING)],
+                name="idx_placement_parent_child_started",
+            ),
+            IndexModel(
+                [("child_profile_id", ASCENDING), ("status", ASCENDING)],
+                name="idx_placement_child_status",
             ),
         ]
     )

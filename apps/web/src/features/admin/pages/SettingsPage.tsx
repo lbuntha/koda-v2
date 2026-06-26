@@ -2,11 +2,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import type { XpSettings } from '@koda/contracts';
 import type { AdminOutletContext } from '../AdminLayout';
-import { isSuperadmin } from '../hooks/useAdminAuth';
+import { AdminPageLayout } from '../components/AdminPageLayout';
+import { isAdminRole } from '../hooks/useAdminAuth';
 import { getXpSettings, updateXpSettings } from '@/lib/api';
 import { copy } from '@/lib/i18n';
 import { Card, Input } from '@/shared/ui';
 import { ErrorBanner, ReadOnlyPill, SaveBar } from './RolesPage';
+import { AdminPageSkeleton } from '../components/AdminSkeleton';
 
 type SaveState = 'idle' | 'saving' | 'saved' | 'error';
 
@@ -21,7 +23,7 @@ const FIELDS: Array<{ key: FieldKey; labelKey: 'xpLessonComplete' | 'xpPerfectBo
 export default function SettingsPage() {
     const { locale, token, user } = useOutletContext<AdminOutletContext>();
     const t = copy[locale];
-    const canEdit = isSuperadmin(user.role);
+    const canEdit = isAdminRole(user.role);
 
     const [initial, setInitial] = useState<XpSettings | null>(null);
     const [draft, setDraft] = useState<XpSettings | null>(null);
@@ -61,24 +63,18 @@ export default function SettingsPage() {
     }
 
     return (
-        <section className="max-w-2xl">
-            <header className="flex flex-wrap items-start justify-between gap-4">
-                <div>
-                    <p className="text-xs font-black uppercase tracking-wide text-brand-600 dark:text-brand-400">
-                        {t.adminConsole}
-                    </p>
-                    <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-900 dark:text-white">
-                        {t.settingsTitle}
-                    </h1>
-                    <p className="mt-3 text-base leading-7 text-slate-600 dark:text-slate-300">{t.settingsBody}</p>
-                </div>
-                {!canEdit && <ReadOnlyPill label={t.readOnly} />}
-            </header>
+        <AdminPageLayout
+            actions={!canEdit && <ReadOnlyPill label={t.readOnly} />}
+            className="max-w-2xl"
+            description={t.settingsBody}
+            title={t.settingsTitle}
+        >
 
             {error && <ErrorBanner message={error} />}
+            {!draft && !error && <AdminPageSkeleton rows={3} />}
 
             {draft && (
-                <Card className="mt-6 space-y-4">
+                <Card className="space-y-4 border-[#E7E2F6]">
                     {FIELDS.map(field => (
                         <Input
                             key={field.key}
@@ -107,6 +103,6 @@ export default function SettingsPage() {
                     onSave={save}
                 />
             )}
-        </section>
+        </AdminPageLayout>
     );
 }

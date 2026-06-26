@@ -16,13 +16,8 @@ export default function AdminOverview() {
     return (
         <section className="max-w-4xl">
             <header>
-                <p className="text-xs font-black uppercase tracking-wide text-brand-600 dark:text-brand-400">
-                    {t.adminConsole}
-                </p>
-                <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-900 dark:text-white">
-                    {t.overviewTitle}
-                </h1>
-                <p className="mt-3 text-base leading-7 text-slate-600 dark:text-slate-300">{t.overviewBody}</p>
+                <h1 className="koda-admin-page-title">{t.overviewTitle}</h1>
+                <p className="koda-admin-label mt-3 max-w-2xl">{t.overviewBody}</p>
             </header>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">

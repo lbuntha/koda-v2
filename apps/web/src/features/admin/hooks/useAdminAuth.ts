@@ -8,11 +8,7 @@ export type AdminAuthState =
     | { status: 'authenticated'; user: UserPublic; token: string };
 
 export function isAdminRole(role: Role) {
-    return role === 'admin' || role === 'superadmin';
-}
-
-export function isSuperadmin(role: Role) {
-    return role === 'superadmin';
+    return role === 'admin';
 }
 
 export function useAdminAuth(): AdminAuthState {

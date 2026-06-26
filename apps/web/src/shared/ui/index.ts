@@ -1,6 +1,10 @@
 export { AppHeader } from './AppHeader';
+export { AvatarCollectionPicker, diceBearAdventurerNeutralUrl, diceBearAvatarUrl } from './AvatarCollectionPicker';
 export { Button } from './Button';
 export { Card, CardBody, CardHeader, CardKicker, CardTitle } from './Card';
+export { ConfirmDialog } from './ConfirmDialog';
+export { DataTable, type DataTableColumn } from './DataTable';
 export { Input } from './Input';
 export { LocaleSwitcher } from './LocaleSwitcher';
+export { Tabs, type TabItem } from './Tabs';
 export { ThemeToggle } from './ThemeToggle';

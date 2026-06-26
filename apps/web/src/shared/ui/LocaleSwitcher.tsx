@@ -1,33 +1,30 @@
 import type { Locale } from '@/lib/i18n';
 
 export function LocaleSwitcher({
+    label = 'Language',
     locale,
     onChange,
     options = ['en', 'km'],
 }: {
+    label?: string;
     locale: Locale;
     onChange: (next: Locale) => void;
     options?: Locale[];
 }) {
     return (
-        <div className="inline-flex rounded-2xl border border-slate-200 bg-white p-1 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-            {options.map(option => {
-                const active = locale === option;
-                return (
-                    <button
-                        key={option}
-                        className={`min-h-10 rounded-xl px-3 text-xs font-bold transition ${
-                            active
-                                ? 'bg-brand-500 text-white shadow-sm dark:bg-brand-400 dark:text-slate-950'
-                                : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
-                        }`}
-                        type="button"
-                        onClick={() => onChange(option)}
-                    >
+        <label className="inline-flex min-h-11 items-center gap-2 rounded-2xl border border-[#E7E2F6] bg-white px-3 text-sm font-medium text-[#6D6997] shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+            {label && <span>{label}</span>}
+            <select
+                className="bg-transparent text-sm font-semibold text-[#0E0B55] outline-none dark:text-white"
+                value={locale}
+                onChange={event => onChange(event.target.value as Locale)}
+            >
+                {options.map(option => (
+                    <option key={option} value={option}>
                         {option.toUpperCase()}
-                    </button>
-                );
-            })}
-        </div>
+                    </option>
+                ))}
+            </select>
+        </label>
     );
 }

@@ -1,23 +1,18 @@
 import { useState } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { AdminSidebar } from './AdminSidebar';
+import { AdminLayoutSkeleton } from './components/AdminSkeleton';
 import { isAdminRole, useAdminAuth } from './hooks/useAdminAuth';
 import type { Locale } from '@/lib/i18n';
-import { copy } from '@/lib/i18n';
-import { LocaleSwitcher, ThemeToggle } from '@/shared/ui';
+import { LocaleSwitcher } from '@/shared/ui';
 
 export default function AdminLayout() {
     const auth = useAdminAuth();
     const location = useLocation();
     const [locale, setLocale] = useState<Locale>('en');
-    const t = copy[locale];
 
     if (auth.status === 'loading') {
-        return (
-            <div className="grid min-h-screen place-items-center bg-slate-50 text-sm font-bold text-slate-500 dark:bg-[#0B1120] dark:text-slate-400">
-                {t.loadingSettings}…
-            </div>
-        );
+        return <AdminLayoutSkeleton />;
     }
 
     if (auth.status === 'unauthenticated') {
@@ -30,12 +25,11 @@ export default function AdminLayout() {
     }
 
     return (
-        <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-[#0B1120] dark:text-white md:flex-row">
+        <div className="flex min-h-screen bg-[#FBFAFF] text-[#0E0B55] transition-colors duration-300 dark:bg-[#0B1120] dark:text-white">
             <AdminSidebar locale={locale} user={auth.user} />
-            <main className="flex-1 px-5 py-6 sm:px-8 lg:px-10">
-                <div className="mb-6 flex items-center justify-end gap-2">
-                    <LocaleSwitcher locale={locale} onChange={setLocale} />
-                    <ThemeToggle />
+            <main className="relative min-w-0 flex-1 p-3 sm:p-4 lg:p-5">
+                <div className="absolute right-3 top-3 z-20 sm:right-4 sm:top-4 lg:right-5 lg:top-5">
+                    <LocaleSwitcher label="" locale={locale} onChange={setLocale} />
                 </div>
                 <Outlet context={{ locale, token: auth.token, user: auth.user }} />
             </main>

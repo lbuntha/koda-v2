@@ -43,7 +43,7 @@ seeds/skills/           JSON skill content (loaded into Mongo)
 | `make local-web` | Boot Vite only |
 | `make down` | Stop everything |
 | `make seed` | Load seed skills into Mongo |
-| `make admin-seed EMAIL=…` | Promote account to superadmin |
+| `make admin-seed EMAIL=…` | Promote account to admin |
 | `make settings-seed` | Seed default app settings |
 | `make test` | Run vitest + pytest |
 | `make typecheck` | tsc + mypy |
